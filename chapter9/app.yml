@@ -1,0 +1,25 @@
+---
+- name: This playbook will install nginx
+  hosts: all
+  become: true
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: latest
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+    - name: Add index page
+      template:
+        src: index.html
+        dest: /var/www/html/index.html # Ruta correcta para Nginx en Amazon Linux
+
+    - name: Start and enable Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: true  # Asegura que Nginx se inicie al arrancar el sistema
